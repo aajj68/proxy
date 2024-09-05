@@ -1,22 +1,31 @@
 #!/bin/bash
 
+#set -x
+
 # Capture the external IP address
 EXTERNAL_IP=$(curl -s ifconfig.me)
+SOCKS5_PORT=5016
+
+cd /etc/privoxy
+for file in *.new; do
+    cp "$file" "${file%.new}"
+done
 
 # Path to the Privoxy configuration file
-PRIVOXY_CONFIG="/etc/privoxy/config"
+PRIVOXY_ACTION="/etc/privoxy/match-all.action"
 
 # Update the Privoxy configuration with the new IP address
 # Remove any existing line with 'forward-add-header' and add the new one
-sed -i '/forward-add-header {external-ip}/d' $PRIVOXY_CONFIG
-echo "forward-add-header {external-ip} $EXTERNAL_IP" >> $PRIVOXY_CONFIG
-
-# Determine the host's IP address
-HOST_IP=$(hostname -I | awk '{print \$1}')
-
-# Extract the last octet of the host's IP address to determine the SOCKS5 port
-LAST_OCTET=$(echo $HOST_IP | awk -F. '{print \$4}')
-SOCKS5_PORT=$((5000 + LAST_OCTET))
+sed -i "s/+add-header{x-externalip: [^}]*}/+add-header{x-externalip: $EXTERNAL_IP}/" $PRIVOXY_ACTION
+# echo "forward-add-header {external-ip} $EXTERNAL_IP" >> $PRIVOXY_CONFIG
 
 # Restart the Privoxy service to apply changes
-service privoxy restart
+# Encontra o PID do processo privoxy
+PROC=$(ps aux | grep privoxy | grep -v grep | awk "{print \$1}" | head -n 1)
+
+# Verifica se o PID foi encontrado e mata o processo
+if [ -n "$PROC" ]; then
+  kill $PROC &
+fi
+
+privoxy --no-daemon /etc/privoxy/config &
