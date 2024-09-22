@@ -431,7 +431,11 @@ actionsfile user.action      # User customizations
 #
 filterfile default.filter
 filterfile user.filter      # User customizations
-#
+filterfile insert-comment.filter
+
+# Aplique o filtro a todas as URLs
+{ +filter{insert-comment} }
+/
 #  2.7. logfile
 #  =============
 #
@@ -568,10 +572,10 @@ logfile privoxy.log
 #
 #      The available debug levels are:
 #
-         debug     1 # Log the destination for each request. See also debug 1024.
+#        debug     1 # Log the destination for each request. See also debug 1024.
 #        debug     2 # show each connection status
 #        debug     4 # show tagging-related messages
-         debug     8 # show header parsing
+#        debug     8 # show header parsing
 #        debug    16 # log all data written to the network
 #        debug    32 # debug force feature
 #        debug    64 # debug regular expression filters
@@ -620,7 +624,7 @@ logfile privoxy.log
 #debug  1024 # Log the destination for requests Privoxy didn't let through, and the reason why.
 #debug  4096 # Startup banner and warnings
 #debug  8192 # Non-fatal errors
-#debug 65536 # Log applying actions
+debug 65536 # Log applying actions
 #
 #  3.2. single-threaded
 #  =====================

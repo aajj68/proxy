@@ -5,7 +5,7 @@ services:
     #entrypoint: /usr/local/bin/update_privoxy_ip.sh
     ports:
       - "${PRIVOXY_PORT:-8118}:8118"
-      - "${SOCKS5_PORT:-5016}:5016"
-    environment:
-      - SOCKS5_PORT=${SOCKS5_PORT:-5016}
+    # - "${SOCKS5_PORT:-5016}:5016"
+    #environment:
+    #  - SOCKS5_PORT=${SOCKS5_PORT:-5016}
     restart: unless-stopped

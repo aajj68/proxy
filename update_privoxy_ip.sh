@@ -12,11 +12,11 @@ for file in *.new; do
 done
 
 # Path to the Privoxy configuration file
-PRIVOXY_ACTION="/etc/privoxy/match-all.action"
+PRIVOXY_FILTER="/etc/privoxy/insert-comment.filter"
 
 # Update the Privoxy configuration with the new IP address
 # Remove any existing line with 'forward-add-header' and add the new one
-sed -i "s/+add-header{x-externalip: [^}]*}/+add-header{x-externalip: $EXTERNAL_IP}/" $PRIVOXY_ACTION
+# sed -i "s/+add-header{x-externalip: [^}]*}/+add-header{x-externalip: $EXTERNAL_IP}/" $PRIVOXY_FILTER
 # echo "forward-add-header {external-ip} $EXTERNAL_IP" >> $PRIVOXY_CONFIG
 
 # Restart the Privoxy service to apply changes

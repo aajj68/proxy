@@ -10,7 +10,7 @@ RUN apk update && \
 
 # Copy the update script into the container
 COPY config /etc/privoxy/config.new
-COPY match-all.action /etc/privoxy/match-all.action.new
+COPY insert-comment.filter /etc/privoxy/insert-comment.filter.new
 COPY update_privoxy_ip.sh /usr/local/bin/update_privoxy_ip.sh
 
 # Make the script executable

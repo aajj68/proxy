@@ -1,0 +1,4 @@
+FILTER: insert-comment Insert external IP comment before </html>
+
+# Insere um comentário com o IP externo antes da tag </html>
+s@(</html>)@<!-- External IP: {172.18.18.16} -->\n\1@i
