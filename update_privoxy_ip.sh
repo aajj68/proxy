@@ -12,7 +12,7 @@ for file in *.new; do
 done
 
 # Path to the Privoxy configuration file
-PRIVOXY_FILTER="/etc/privoxy/insert-comment.filter"
+# PRIVOXY_FILTER="/etc/privoxy/insert-comment.filter"
 
 # Update the Privoxy configuration with the new IP address
 # Remove any existing line with 'forward-add-header' and add the new one
@@ -21,11 +21,12 @@ PRIVOXY_FILTER="/etc/privoxy/insert-comment.filter"
 
 # Restart the Privoxy service to apply changes
 # Encontra o PID do processo privoxy
-PROC=$(ps aux | grep privoxy | grep -v grep | awk "{print \$1}" | head -n 1)
+#PROC=$(ps aux | grep privoxy | grep -v grep | awk "{print \$1}" | head -n 1)
 
 # Verifica se o PID foi encontrado e mata o processo
 if [ -n "$PROC" ]; then
   kill $PROC &
 fi
 
+python3 -m http.server 9119
 privoxy --no-daemon /etc/privoxy/config &

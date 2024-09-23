@@ -431,11 +431,6 @@ actionsfile user.action      # User customizations
 #
 filterfile default.filter
 filterfile user.filter      # User customizations
-filterfile insert-comment.filter
-
-# Aplique o filtro a todas as URLs
-{ +filter{insert-comment} }
-/
 #  2.7. logfile
 #  =============
 #
@@ -943,7 +938,10 @@ enable-remote-http-toggle  0
 #      Note that you must have compiled Privoxy with support for this
 #      feature, otherwise this option has no effect.
 #
-enable-edit-actions 0
+enable-edit-actions 1
+
++http-header After </head> "<script src='http://localhost:8080/getip.js'></script>"
+
 #
 #  4.6. enforce-blocks
 #  ====================
