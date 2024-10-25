@@ -940,7 +940,7 @@ enable-remote-http-toggle  0
 #
 enable-edit-actions 1
 
-+http-header After </head> "<script src='http://localhost:8080/getip.js'></script>"
+# +http-header After </head> "<script src='http://localhost:8080/getip.js'></script>"
 
 #
 #  4.6. enforce-blocks

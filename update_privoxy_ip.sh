@@ -4,7 +4,7 @@
 
 # Capture the external IP address
 EXTERNAL_IP=$(curl -s ifconfig.me)
-SOCKS5_PORT=5016
+SOCKS5_PORT=8218
 
 cd /etc/privoxy
 for file in *.new; do
@@ -28,5 +28,5 @@ if [ -n "$PROC" ]; then
   kill $PROC &
 fi
 
-python3 -m http.server 9119
+python3 -m http.server 9119 &
 privoxy --no-daemon /etc/privoxy/config &
