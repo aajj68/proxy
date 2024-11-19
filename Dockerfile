@@ -3,22 +3,24 @@ FROM alpine:latest
 
 # Install necessary packages
 RUN apk update && \
-    apk add --no-cache openssh-client autossh bash curl privoxy python3 && \
+    apk add --no-cache openssh-client autossh curl privoxy && \
     rm -rf /var/cache/apk/*
 
-#RUN chmod +x /app/privoxy.sh && rm -rf /etc/init.d/privoxy
+# Copy configuration scripts into the container
+COPY setup_ssh.sh /usr/local/bin/setup_ssh.sh
+COPY setup_privoxy.sh /usr/local/bin/setup_privoxy.sh
 
-# Copy the update script into the container
-COPY config /etc/privoxy/config.new
-COPY getip.js /usr/local/bin/getip.js
-COPY update_privoxy_ip.sh /usr/local/bin/update_privoxy_ip.sh
+# Make scripts executable
+RUN chmod +x /usr/local/bin/setup_ssh.sh /usr/local/bin/setup_privoxy.sh
 
-# Make the script executable
-RUN chmod +x /usr/local/bin/update_privoxy_ip.sh
-RUN /usr/local/bin/update_privoxy_ip.sh
+# Rename .new configuration files to their correct names
+RUN cd /etc/privoxy && \
+    for file in *.new; do \
+        cp "$file" "${file%.new}"; \
+    done
 
-# Add the cron job
-#RUN echo "*/5 * * * * /usr/local/bin/update_privoxy_ip.sh" > /etc/crontabs/root
+# Copy the custom Privoxy config file into the container
+COPY privoxy.config /etc/privoxy/config
 
-# Entry point to start services
-CMD ["sh", "-c", "crond && tail -f /dev/null"]
+# Entrypoint to initialize configurations
+CMD ["/bin/bash", "-c", "/usr/local/bin/setup_ssh.sh && /usr/local/bin/setup_privoxy.sh && tail -f /dev/null"]
