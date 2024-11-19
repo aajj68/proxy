@@ -1,0 +1,11 @@
+plaintext
+# external_ip.filter
+
+FILTER: add-external-ip-meta-tag Tag to add external IP as a meta tag
+s@(</head>)@<meta name="ExternalIp" content="1.1.1.1" id="ExternalIp" />\1@i
+
+# user.action
+
+# Apply the filter to add the <meta> tag with the external IP
+{+filter{add-external-ip-meta-tag}}
+/
