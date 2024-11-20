@@ -2,11 +2,6 @@ services:
   privoxy:
     build: .
     container_name: privoxy
-    #entrypoint: /usr/local/bin/update_privoxy_ip.sh
     ports:
       - "${PRIVOXY_PORT:-8118}:8118"
-      - "${WEBSERVER_PORT:-9119}:8018"
-      - "${SOCKS5_PORT:-8218}:8218"
-    #environment:
-      - SOCKS5_PORT=${SOCKS5_PORT:-8218}
     restart: unless-stopped

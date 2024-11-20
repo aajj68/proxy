@@ -1,24 +1,36 @@
 # Use the base image from the existing setup
-FROM alpine:latest
+FROM alpine:3.19
 
-# Install necessary packages
+# Substitui o repositório padrão por um espelho alternativo
+#RUN sed -i 's|https://dl-cdn.alpinelinux.org/alpine/|https://mirror.clarkson.edu/alpine/|' /etc/apk/repositories
+#RUN sed -i 's/https/http/' /etc/apk/repositories
+#RUN apk add curl
+# Atualiza os repositórios e instala os pacotes necessários
 RUN apk update && \
-    apk add --no-cache openssh-client autossh bash curl privoxy python3 && \
-    rm -rf /var/cache/apk/*
+    apk upgrade && \
+    apk add openssh openssh-client autossh curl privoxy bash
 
-#RUN chmod +x /app/privoxy.sh && rm -rf /etc/init.d/privoxy
+# Limpa o cache do apk (opcional, mas recomendado para reduzir o tamanho da imagem)
+RUN rm -rf /var/cache/apk/*
 
-# Copy the update script into the container
-COPY config /etc/privoxy/config.new
-COPY getip.js /usr/local/bin/getip.js
-COPY update_privoxy_ip.sh /usr/local/bin/update_privoxy_ip.sh
+# Copy configuration scripts into the container
+COPY ssh_setup.sh /usr/local/bin/ssh_setup.sh
+COPY privoxy_setup.sh /usr/local/bin/privoxy_setup.sh
+COPY privoxy_start.sh /usr/local/bin/privoxy_start.sh
 
-# Make the script executable
-RUN chmod +x /usr/local/bin/update_privoxy_ip.sh
-RUN /usr/local/bin/update_privoxy_ip.sh
+# Make scripts executable
+RUN chmod +x /usr/local/bin/ssh_setup.sh /usr/local/bin/privoxy_setup.sh /usr/local/bin/privoxy_start.sh
 
-# Add the cron job
-#RUN echo "*/5 * * * * /usr/local/bin/update_privoxy_ip.sh" > /etc/crontabs/root
+# Rename .new configuration files to their correct names
+#RUN cd /etc/privoxy && \
+#    for file in *.new; do \
+#        cp "$file" "${file%.new}"; \
+#    done
 
-# Entry point to start services
-CMD ["sh", "-c", "crond && tail -f /dev/null"]
+# Copy the custom Privoxy config file into the container
+COPY config /etc/privoxy/config
+COPY user.filter /etc/privoxy/user.filter
+COPY sshd_config /etc/ssh/sshd_config
+
+# Entrypoint to initialize configurations
+CMD ["/bin/bash", "-c", "/usr/local/bin/ssh_setup.sh && /usr/local/bin/privoxy_setup.sh && tail -f /dev/null"]
