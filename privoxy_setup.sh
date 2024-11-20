@@ -1,4 +1,5 @@
 #!/bin/bash
+source /usr/local/bin/privoxy_start.sh
 
 # Caminho para o arquivo de filtro do Privoxy
 PRIVOXY_FILTER="/etc/privoxy/user.filter"
@@ -15,8 +16,7 @@ update_external_ip() {
 EXTERNAL_IP=$(curl -s ifconfig.me)
 update_external_ip $EXTERNAL_IP
 
-echo "Starting Privoxy..."
-privoxy --no-daemon /etc/privoxy/config &
+privoxy_start()
 
 # Loop para verificar mudanças no IP externo
 while true; do
@@ -29,7 +29,6 @@ while true; do
         # Reinicia o Privoxy para aplicar as mudanças
         echo "Restarting Privoxy..."
         killall privoxy
-        echo "Restarting Privoxy..."
-        privoxy --no-daemon /etc/privoxy/config &
+        privoxy_start()
     fi
 done

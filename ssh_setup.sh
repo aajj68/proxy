@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ssh-keygen -A
+exec /usr/sbin/sshd -D -e "$@"
+
 # Diretório de trabalho para chaves SSH
 SSH_DIR="/root/.ssh"
 
