@@ -127,7 +127,8 @@
 #          config file, because it is used while the config file is
 #          being read.
 #
-user-manual /usr/share/doc/privoxy/user-manual/
+#user-manual /usr/share/doc/privoxy/user-manual/
+user-manual http://www.privoxy.org/user-manual/index.html
 #
 #  1.2. trust-info-url
 #  ====================
@@ -2843,4 +2844,4 @@ socket-timeout 300
 #hide-console
 #
 #
-/ # 
+# 

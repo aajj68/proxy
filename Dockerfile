@@ -1,5 +1,5 @@
 # Use the base image from the existing setup
-FROM alpine:3.19
+FROM alpine:latest
 
 # Substitui o repositório padrão por um espelho alternativo
 #RUN sed -i 's|https://dl-cdn.alpinelinux.org/alpine/|https://mirror.clarkson.edu/alpine/|' /etc/apk/repositories
@@ -33,4 +33,5 @@ COPY user.filter /etc/privoxy/user.filter
 COPY sshd_config /etc/ssh/sshd_config
 
 # Entrypoint to initialize configurations
-CMD ["/bin/bash", "-c", "/usr/local/bin/ssh_setup.sh && /usr/local/bin/privoxy_setup.sh && tail -f /dev/null"]
+CMD ["/bin/sh", "-c", "/usr/local/bin/ssh_setup.sh && /usr/local/bin/privoxy_setup.sh"] 
+# && tail -f /dev/null"]
