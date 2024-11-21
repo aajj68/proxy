@@ -2,6 +2,7 @@
 source /usr/local/bin/privoxy_start.sh
 # Caminho para o arquivo de filtro do Privoxy
 PRIVOXY_FILTER="/etc/privoxy/user.filter"
+PRIVOXY_ACTION="/etc/privoxy/user.action"
 
 # Função para atualizar o IP externo no arquivo de filtro do Privoxy
 update_external_ip() {
@@ -9,8 +10,9 @@ update_external_ip() {
     echo "Updating Privoxy filter with IP: $ip"
     # Substitui o IP no filtro
     #sed -i "s/content=\"[0-9.]*\"/content=\"$ip\"/" $PRIVOXY_FILTER
-    #sed -i "s/data-ip=\"[0-9.]*\"/data-ip=\"$ip\"/" $PRIVOXY_FILTER
     sed -i "s/data-ip=\"[0-9.]*\"/data-ip=\"$ip\"/" $PRIVOXY_FILTER
+    sed -i "s/data-ip=[0-9.]*;/data-ip=$ip;/" $PRIVOXY_FILTER
+    sed -i "s|add-header{Set-Cookie: data-ip=[0-9.]*;|add-header{Set-Cookie: data-ip=$ip;|" $PRIVOXY_ACTION
 }
 
 # Obtém o IP externo inicial

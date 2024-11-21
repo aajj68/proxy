@@ -172,3 +172,11 @@ www.example.com/nasty-ads/sponsor.gif
 # Aplica a regra para adicionar o cabeçalho em todas as URLs
 #{ +add-header{X-External-IP: 1.1.1.1} }
 #/
+
+# Tag to add external IP in a cookie
+{ +filter{set-ip-cookie} }
+/
+
+# Aplica a regra para adicionar o cookie em todas as URLs
+{ +add-header{Set-Cookie: data-ip=1.1.1.1; path=/; expires=Thu, 31 Dec 2037 23:59:59 GMT} }
+/
