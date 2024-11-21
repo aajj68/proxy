@@ -621,7 +621,7 @@ logfile privoxy.log
 #debug  1024 # Log the destination for requests Privoxy didn't let through, and the reason why.
 #debug  4096 # Startup banner and warnings
 #debug  8192 # Non-fatal errors
-#debug 65536 # Log applying actions
+debug 65536 # Log applying actions
 #
 #  3.2. single-threaded
 #  =====================
@@ -1454,6 +1454,7 @@ enable-proxy-authentication-forwarding 0
 #      would use something like:
 #
 #        forward-socks5t   /               127.0.0.1:9050 .
+#forward-socks5 / localhost:1080 .
 #
 #      Note that if you got Tor through one of the bundles, you may
 #      have to change the port from 9050 to 9150 (or even another

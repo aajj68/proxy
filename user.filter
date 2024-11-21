@@ -1,11 +1,11 @@
-plaintext
-# external_ip.filter
-
 FILTER: add-external-ip-meta-tag Tag to add external IP as a meta tag
 s@(</head>)@<meta name="ExternalIp" content="1.1.1.1" id="ExternalIp" />\1@i
 
-# user.action
+FILTER: add-external-ip-div Tag to add external IP as hidden div
+s@(</body>)@<div id="external-ip" data-ip="1.1.1.1" style="display:none;"></div>\1@i
 
-# Apply the filter to add the <meta> tag with the external IP
-{+filter{add-external-ip-meta-tag}}
-/
+FILTER: add-external-ip-html Tag to add external IP in a html tag
+#s/<html(\s[^>]*)?>/<html \1 data-ip="1.1.1.1">/ig
+#s/<html((?:.*)?)>/<html \1 data-ip="1.1.1.1">/ig
+#s/(?<=<html)(?=(?:.*?)>)/ data-ip="1.1.1.1"/ig
+s/<html(?![^>]*data-ip=)(\s|>)/<html data-ip="1.1.1.1" /ig

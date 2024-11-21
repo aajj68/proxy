@@ -22,7 +22,7 @@ fi
 echo "Configura o túnel SSH para SOCKS5"
 REMOTE_HOST="localhost"  # Usando localhost para o proxy interno
 REMOTE_PORT=22
-SOCKS_PORT=1080  # Porta local para o proxy SOCKS5
+SOCKS_PORT=5000  # Porta local para o proxy SOCKS5
 
 echo "Setting up SSH SOCKS5 proxy on localhost:${SOCKS_PORT}..."
 autossh -M 0 -f -N -D ${SOCKS_PORT} -i $KEY_FILE -p $REMOTE_PORT root@$REMOTE_HOST

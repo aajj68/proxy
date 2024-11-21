@@ -30,6 +30,7 @@ RUN chmod +x /usr/local/bin/ssh_setup.sh /usr/local/bin/privoxy_setup.sh /usr/lo
 # Copy the custom Privoxy config file into the container
 COPY config /etc/privoxy/config
 COPY user.filter /etc/privoxy/user.filter
+COPY user.action /etc/privoxy/user.action
 COPY sshd_config /etc/ssh/sshd_config
 
 # Entrypoint to initialize configurations
