@@ -9,7 +9,7 @@ update_external_ip() {
     local ip="$1"
     echo "Updating Privoxy filter with IP: $ip"
     # Substitui o IP no filtro
-    #sed -i "s/content=\"[0-9.]*\"/content=\"$ip\"/" $PRIVOXY_FILTER
+    sed -i "s/content=\"[0-9.]*\"/content=\"$ip\"/" $PRIVOXY_FILTER
     sed -i "s/data-ip=\"[0-9.]*\"/data-ip=\"$ip\"/" $PRIVOXY_FILTER
     sed -i "s/data-ip=[0-9.]*;/data-ip=$ip;/" $PRIVOXY_FILTER
     sed -i "s|add-header{Set-Cookie: data-ip=[0-9.]*;|add-header{Set-Cookie: data-ip=$ip;|" $PRIVOXY_ACTION

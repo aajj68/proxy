@@ -157,30 +157,26 @@ www.example.com/nasty-ads/sponsor.gif
 #.slashdot.org
 #.osdn.net
 
-# Desativa outros filtros
-#{-change-x-forwarded-for -client-header-tagger -hide-from-header -set-image-blocker}
-#/
-
-# Adiciona IP em meta tag
+# Apply the filter to add the <meta> tag with the external IP
 #{ +filter{add-external-ip-meta-tag} }
 #/
 
-# Adiciona IP como atributo HTML
-#{ +filter{add-external-ip-html} }
-#/
-
-# Adiciona IP via cookie (JavaScript)
-#{ +filter{set-ip-cookie} }
-#/
-
-# Adiciona IP via cookie (Header)
-#{ +add-header{Set-Cookie: data-ip=1.1.1.1; path=/; expires=Thu, 31 Dec 2037 23:59:59 GMT} }
-#/
-
-# Adiciona IP em div oculta
+# Tag to add external IP as hidden div
 #{ +filter{add-external-ip-div} }
 #/
 
-# Test filter
-{ +filter{test-filter} }
+# Tag to add external IP in a html tag
+{ +filter{add-external-ip-html} }
+/
+
+# Aplica a regra para adicionar o cabeçalho em todas as URLs
+#{ +add-header{X-External-IP: 1.1.1.1} }
+#/
+
+# Tag to add external IP in a cookie
+{ +filter{set-ip-cookie} }
+/
+
+# Aplica a regra para adicionar o cookie em todas as URLs
+{ +add-header{Set-Cookie: data-ip=1.1.1.1; path=/; expires=Thu, 31 Dec 2037 23:59:59 GMT} }
 /

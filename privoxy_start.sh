@@ -15,3 +15,6 @@ cd $CFG_DIR
 [ -f default.action ] || cp -v default.action.new default.action
 [ -f user.action ] || cp -v user.action.new user.action
 
+chmod 660 $CFG_DIR/*
+chmod 774 $CFG_DIR/templates
+chown privoxy:privoxy $CFG_DIR/*
