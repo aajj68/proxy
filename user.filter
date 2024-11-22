@@ -1,0 +1,5 @@
+FILTER: add-external-ip Add external IP in a html code
+s/(?<=<html)(?=(?:.*?)>)/ data-ip="1.1.1.1"/ig
+s@</head>@</head><script type="text/javascript">document.cookie="data-ip=1.1.1.1; path=/";</script>@ig
+s@(</body>)@<div id="external-ip" data-ip="1.1.1.1" style="display:none;"></div>\1@i
+s@(</head>)@<meta name="data-ip" content="1.1.1.1" id="data-ip" />\1@i
