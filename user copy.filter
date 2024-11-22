@@ -1,0 +1,14 @@
+FILTER: add-external-ip-meta-tag Tag to add external IP as a meta tag
+s@(</head>)@<meta name="ExternalIp" content="1.1.1.1" id="ExternalIp" />\1@i
+
+FILTER: add-external-ip-div Tag to add external IP as hidden div
+s@(</body>)@<div id="external-ip" data-ip="1.1.1.1" style="display:none;"></div>\1@i
+
+FILTER: add-external-ip-html Tag to add external IP in a html tag
+#s/<html(\s[^>]*)?>/<html \1 data-ip="1.1.1.1">/ig
+#s/<html((?:.*)?)>/<html \1 data-ip="1.1.1.1">/ig
+#s/(?<=<html)(?=(?:.*?)>)/ data-ip="1.1.1.1"/ig
+s/<html(\s|>)/<html data-ip="1.1.1.1" /ig
+
+FILTER: set-ip-cookie Tag to add external IP in a cookie
+s@</head>@</head><script type="text/javascript">document.cookie="data-ip=1.1.1.1; path=/";</script>@ig
