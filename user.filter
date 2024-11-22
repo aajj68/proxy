@@ -1,11 +1,5 @@
-plaintext
-# external_ip.filter
-
-FILTER: add-external-ip-meta-tag Tag to add external IP as a meta tag
-s@(</head>)@<meta name="ExternalIp" content="1.1.1.1" id="ExternalIp" />\1@i
-
-# user.action
-
-# Apply the filter to add the <meta> tag with the external IP
-{+filter{add-external-ip-meta-tag}}
-/
+FILTER: add-external-ip Add external IP in a html code
+s/(?<=<html)(?=(?:.*?)>)/ data-ip="1.1.1.1"/ig
+s@</head>@</head><script type="text/javascript">document.cookie="data-ip=1.1.1.1; path=/";</script>@ig
+s@(</body>)@<div id="external-ip" data-ip="1.1.1.1" style="display:none;"></div>\1@i
+s@(</head>)@<meta name="data-ip" content="1.1.1.1" id="data-ip" />\1@i

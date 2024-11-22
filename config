@@ -127,7 +127,8 @@
 #          config file, because it is used while the config file is
 #          being read.
 #
-user-manual /usr/share/doc/privoxy/user-manual/
+#user-manual /usr/share/doc/privoxy/user-manual/
+user-manual http://www.privoxy.org/user-manual/index.html
 #
 #  1.2. trust-info-url
 #  ====================
@@ -620,7 +621,7 @@ logfile privoxy.log
 #debug  1024 # Log the destination for requests Privoxy didn't let through, and the reason why.
 #debug  4096 # Startup banner and warnings
 #debug  8192 # Non-fatal errors
-#debug 65536 # Log applying actions
+debug 65536 # Log applying actions
 #
 #  3.2. single-threaded
 #  =====================
@@ -939,7 +940,7 @@ enable-remote-http-toggle  0
 #      Note that you must have compiled Privoxy with support for this
 #      feature, otherwise this option has no effect.
 #
-enable-edit-actions 0
+enable-edit-actions 1
 #
 #  4.6. enforce-blocks
 #  ====================
@@ -1453,6 +1454,7 @@ enable-proxy-authentication-forwarding 0
 #      would use something like:
 #
 #        forward-socks5t   /               127.0.0.1:9050 .
+#forward-socks5 / localhost:1080 .
 #
 #      Note that if you got Tor through one of the bundles, you may
 #      have to change the port from 9050 to 9150 (or even another
@@ -2843,4 +2845,4 @@ socket-timeout 300
 #hide-console
 #
 #
-/ # 
+# 

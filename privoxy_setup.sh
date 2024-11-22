@@ -1,8 +1,8 @@
 #!/bin/bash
 source /usr/local/bin/privoxy_start.sh
-
 # Caminho para o arquivo de filtro do Privoxy
 PRIVOXY_FILTER="/etc/privoxy/user.filter"
+PRIVOXY_ACTION="/etc/privoxy/user.action"
 
 # Função para atualizar o IP externo no arquivo de filtro do Privoxy
 update_external_ip() {
@@ -10,13 +10,17 @@ update_external_ip() {
     echo "Updating Privoxy filter with IP: $ip"
     # Substitui o IP no filtro
     sed -i "s/content=\"[0-9.]*\"/content=\"$ip\"/" $PRIVOXY_FILTER
+    sed -i "s/data-ip=\"[0-9.]*\"/data-ip=\"$ip\"/" $PRIVOXY_FILTER
+    sed -i "s/data-ip=[0-9.]*;/data-ip=$ip;/" $PRIVOXY_FILTER
+    sed -i "s|add-header{Set-Cookie: data-ip=[0-9.]*;|add-header{Set-Cookie: data-ip=$ip;|" $PRIVOXY_ACTION
 }
 
 # Obtém o IP externo inicial
 EXTERNAL_IP=$(curl -s ifconfig.me)
 update_external_ip $EXTERNAL_IP
 
-privoxy_start()
+echo "Starting Privoxy..."
+/usr/sbin/privoxy --no-daemon --pidfile "${PID_FILE}" "${CFG_FILE}" &
 
 # Loop para verificar mudanças no IP externo
 while true; do
@@ -28,7 +32,9 @@ while true; do
         update_external_ip $EXTERNAL_IP
         # Reinicia o Privoxy para aplicar as mudanças
         echo "Restarting Privoxy..."
+        echo "Stopping Privoxy..."
         killall privoxy
-        privoxy_start()
+        echo "Starting privoxy..."
+        /usr/sbin/privoxy --no-daemon --pidfile "${PID_FILE}" "${CFG_FILE}" &
     fi
 done
