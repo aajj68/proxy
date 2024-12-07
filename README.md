@@ -18,3 +18,9 @@ netsh advfirewall firewall add rule name="Abrir Porta 8118" dir=in action=allow 
 netsh advfirewall firewall add rule name="Abrir Porta 5000" dir=in action=allow protocol=TCP localport=5000
 netsh advfirewall firewall add rule name="Abrir Porta 5022" dir=in action=allow protocol=TCP localport=5022
 ```
+# SSH access
+To access by ssh type:
+```
+ssh prvxy@server_ip -p 5022
+```
+you need to put your public key in file __authorized_access__ in root of project. The software will copy this file to container.
