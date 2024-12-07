@@ -2,9 +2,9 @@
 
 This container provides a Privoxy proxy and a SOCKS5 proxy. It is useful for sharing a VPN connection among computers in your home network, especially since VPN providers, like NordVPN, often impose a limit on simultaneous connections (e.g., NordVPN limits it to 5 connections).
 
-# Privoxy filtes and actions
+# Privoxy filters and actions
 
-For user.action and filter.action, you need to enable them in the configuration file. Note that this only works if you have set up certificate files in Privoxy. However, I tend to avoid this approach as it overloads the server. That is, this will only work if the connection does not use "https".
+For __user.action__ and __filter.action__, you need to enable them in the configuration file. Note that this only works if you have set up certificate files in Privoxy. However, I tend to avoid this approach as it overloads the server. That is, this will only work if the connection does not use "https".
 
 # Useful commands for launching Docker containers
 
