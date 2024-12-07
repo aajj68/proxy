@@ -28,7 +28,7 @@ ListenAddress 0.0.0.0
 
 # Logging
 #SyslogFacility AUTH
-#LogLevel INFO
+LogLevel INFO
 
 # Authentication:
 
@@ -59,8 +59,8 @@ AuthorizedKeysFile      .ssh/authorized_keys
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-#PasswordAuthentication yes
-#PermitEmptyPasswords no
+PasswordAuthentication no
+PermitEmptyPasswords yes
 
 # Change to no to disable s/key passwords
 #KbdInteractiveAuthentication yes
@@ -88,9 +88,9 @@ AuthorizedKeysFile      .ssh/authorized_keys
 
 #AllowAgentForwarding yes
 # Feel free to re-enable these if your use case requires them.
-AllowTcpForwarding no
-GatewayPorts no
-X11Forwarding no
+AllowTcpForwarding yes
+GatewayPorts yes
+X11Forwarding yes
 #X11DisplayOffset 10
 #X11UseLocalhost yes
 #PermitTTY yes
