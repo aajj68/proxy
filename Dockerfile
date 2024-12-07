@@ -30,4 +30,3 @@ COPY sshd_config /etc/ssh/sshd_config
 
 # Entrypoint to initialize configurations
 CMD ["/bin/sh", "-c", "/usr/local/bin/privoxy_setup.sh && /usr/local/bin/ssh_setup.sh && tail -f /dev/null"] 
-#CMD ["/bin/sh", "-c", "/usr/local/bin/privoxy_setup.sh && tail -f /dev/null"]
